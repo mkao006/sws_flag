@@ -1,8 +1,0 @@
-aggregateObservationFlag
-                        This function performs aggregation on the flag
-faoswsFlag-package      Package to manipulate and aggregate
-                        observational status flags.
-faoswsFlagTable         Flag table for the new FAO statistical working
-                        system
-flag2weight             Function to convert flag to information weight.
-weight2flag             Function to convert information weight to flag.
