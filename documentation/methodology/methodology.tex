@@ -22,28 +22,21 @@
 
 
 
-\title{\bf faoswsFlag:A package to perform \\flag aggregation and much
-  more}
+\title{\bf Measuring Information Loss and Harmonization}
 
 \author{Michael. C. J. Kao\\ Food and Agriculture Organization \\ of
   the United Nations}
 
 \Plainauthor{Michael. C. J. Kao} 
 
-\Plaintitle{faoswsFlag:A package to manage flag aggregation}
+\Plaintitle{Measuring Information Loss and Harmonization}
 
-\Shorttitle{Flag module}
+\Shorttitle{Measuring Information Loss and Harmonization}
 
 \Abstract{ 
 
-  This short documentation is intended to explain how observation
-  flags are aggregated in the ESS Statistical Working System.
-  
-  The methodology and tools are presented step by step, with code
-  examples and explanations.
-  
-  The paper also provide example of potential applications for
-  integrating flag information.
+
+
 
 }
 
@@ -57,14 +50,160 @@
   Food and Agriculture Organization of the United Nations (FAO)\\
   Viale delle Terme di Caracalla 00153 Rome, Italy\\
   E-mail: \email{michael.kao@fao.org}\\
-  URL: \url{https://github.com/mkao006/sws_r_api/tree/master/faoswsFlag}
+  URL: \url{https://github.com/mkao006/sws_flag}
 }
 
 
 \begin{document}
+
+
+
+
 \section{Introduction}
 
-\section{Motivation}
+%% Need to talk about the old and the new statistical working system.
+
+%% Need to think about how to present the two problem faced and solved
+%% with a single harmonized framework.
+%% 
+
+%% There are two problems, preserving the most amount of information
+%% and also use of different source of information.
+
+%% In aggregation, the symbol with the lowest weight or in turn
+%% highest information content is preserved. This allow us to retain
+%% the highest amount of information under the scenario where
+%% information loss is inevitable.
+
+%% Further, when it is calculated it means that the information is at
+%% least this amount and potentially more. This is a restriction
+%% imposed by the current system. Publishing the weights would be a
+%% more favourable improvement.
+
+%% IF the weight of production is 0.8 and area is 0.4, then the weight
+%% of yield should be 0.32. Which is lower than both, we need to think
+%% how to assign 0.32 to a flag under the case if there is a flag for
+%% 0.4 and 0.3.
+
+%% I think for observation status we should still use the minimum
+%% rule, but it may not be the ideal solution.
+
+
+International organizations such as FAO inevitably collects
+information and data from various sources and channels. In order to
+provide a comprehensive status of the world in their respective domain
+of operation, one must utilize as much information as possible.
+
+
+%% Check the dates when flags were collected, also elaborate on the
+%% utilization of the flags.
+Since the introduction of the statistical working system in the
+1990's, symbols representing different source of information has been
+recorded. This practice enabled the clerk to identify whether a value
+complies with the organization policy of official values are the most
+trustworthy, and also based on experience which source is more
+reliable. It also underlies some of the earlier algorithm implemented
+in the system whether a value should be calculated or remain as it is.
+
+
+Yet, no attempt has been made to harmonize and treaet the unequal
+information content of various source. Data collected from different
+source and channel does not have the same information
+quality. Further, the various nature of the collection may give arise
+to different statistical properties. The user should not assume that
+the data are of equal quality as they may and will undermine the
+validity of the analysis.
+
+
+The proposed methodology makes the first pursuit to provide a
+systematic approach for this problem. The aim of the approach is to
+allow information from separate source to represent a harmonized
+picture when combined to provide the status of the world.
+
+This paper comprises of just three sections. First, the motivation and
+the problem at hand is presented and why such a framework is
+necessary. Secondly, we present the theory where the fundamentals of
+the principle of minimum discrimination information is
+introduced. Then we illustrate the use of this framework and
+demonstrate how estimators are superior when information quality are
+addressed. Finally, a short conclusion and further work concludes the
+paper.
+
+\section{Motivation and Problem Statement}
+
+We first encountered the problem in the implementation of the new
+system, where historically, values which were calculated were recorded
+with a symbol "C". This causes confusion as it does not represent the
+source of the data but rather the process of the data. Further, the
+original information it was suppose to preserve is lost. Information
+loss is inevitable when several values are involved in the calculation
+to provide a single figure, yet the "C" representation not only reduce
+the information set to only it is calculated, it does not distinguish
+the information quality whether the calculation is based on good solid
+official figure or poor estimates.
+
+The decision was taken to separate this mixing of information, and
+record two flags in the new sytsem. The observation status flag will
+represent the sources of the data collection, while a second flag
+represent the methodologies and processes used to generate the value.
+
+\section{Theory}
+
+
+\subsection{Principle of Minimum Discriminant Information and Cross-Entropy}
+
+Given derived information set, a new distribution $q$ should be chosen
+which is as hard to discriminate from the original distribution $p$ as
+possible; so that the new data produces as small an information gain
+as possible.
+
+In another word, the principle states that if we have to choose
+another representation, the information set which result in the least
+amount of information gain or uncertainty should be chosen.
+
+
+\begin{align*}
+  \mathrm{H}(P, Q) &=  \mathrm{H}(P) + D_{\mathrm{KL}}(P \| Q)\\
+  \intertext{Where}
+  H(P) &= -\sum_{i} {p(x_i) \log p(x_i)},\\
+  D_{\mathrm{KL}}(P\|Q) &= \sum_i \log\left(\frac{p(i)}{q(i)}\right) p(i).\\
+\end{align*}
+
+
+The weights of different information source can then be calculated as
+follow:
+
+\begin{equation*}
+  \omega_i = \left\{
+  \begin{array}{l r}
+    1/(1 + D_{\mathrm{KL}}(P\|Q_i)) \quad \text{if $D_{\mathrm{KL}}(P\|Q_i) \ne 0$}\\
+    1 - 1e^{-5} \, \, \, \, \quad \quad \quad \quad \quad \text{if $D_{\mathrm{KL}}(P\|Q_i) = 0$}
+  \end{array} \right.
+\end{equation*}
+
+
+Essentially, the greater the loss of information the less the
+weight. This is in corcordance with our expectation that the lower the
+information quality, the evidence it provide is less and thus taking
+less weight in the model or analysis.
+
+
+%% Read more on the theory.
+
+\subsection{Maximum Information Perservation Flag Aggregation}
+
+The same framework can also translate for flag aggregation, when
+combining different set of information sets we need to maintain as
+much information as possible. In this case, it is equivalent of taking
+the flag which is classified with the lowest weight.
+
+
+\section{Application}
+
+%% Need to mention that the Empirical Kullback-Leibner is used.
+
+
+\section{Conclusion and Further Work}
 
 
 
