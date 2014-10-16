@@ -7,8 +7,14 @@
 
 
 computeEntropyWeights = function(x, benchmark){
-    weights = 1/(1 + KL.empirical(benchmark, x))
-
+    n = length(x)
+    k = n/10
+    alpha = range(c(x, benchmark))
+    x.density =
+        hist(x, breaks = seq(alpha[1], alpha[2], length = k))$density
+    benchmark.density =
+        hist(benchmark, breaks = seq(alpha[1], alpha[2], length = k))$density    
+    weights = 1/(1 + KL.empirical(benchmark.density, x.density))
     if(weights == 1)
         weights = 1 - 1e-5
 
