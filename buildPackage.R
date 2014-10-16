@@ -30,9 +30,9 @@ roxygenize("faoswsFlag")
 dir.create("./faoswsFlag/vignettes/")
 dir.create("./faoswsFlag/inst/")
 dir.create("./faoswsFlag/inst/doc/")
-file.copy(from = "./documentation/faoswsFlag.pdf",
+file.copy(from = "./documentation/faoswsFlag/faoswsFlag.pdf",
           to = "./faoswsFlag/inst/doc/", overwrite = TRUE)
-file.copy(from = "./documentation/faoswsFlag.Rnw",
+file.copy(from = "./documentation/faoswsFlag/faoswsFlag.Rnw",
           to = "./faoswsFlag/vignettes/", overwrite = TRUE)
 
 ## Build and check the package

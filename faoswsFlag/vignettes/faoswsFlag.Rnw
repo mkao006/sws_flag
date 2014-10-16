@@ -365,7 +365,7 @@ the intranet.
 <<compute-weight, eval=FALSE>>=
 ## load the library
 library(faosws)
-library(faoswsExtra)
+library(faoswsUtil)
 library(faoswsFlag)
 library(data.table)
 library(FAOSTAT)
