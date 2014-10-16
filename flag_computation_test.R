@@ -1,6 +1,6 @@
 ## load the library
 library(faosws)
-library(faoswsExtra)
+library(faoswsUtil)
 library(faoswsFlag)
 library(faoswsProductionImputation)
 library(data.table)
