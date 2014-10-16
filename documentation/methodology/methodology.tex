@@ -87,6 +87,11 @@
 %% I think for observation status we should still use the minimum
 %% rule, but it may not be the ideal solution.
 
+%% The framework also enable us to decide which data source to
+%% distribute. Official data are disseminated when available, but
+%% under the absence of official data, this framework enable algorithm
+%% to determine the best alternative representation to disseminate.
+
 
 International organizations such as FAO inevitably collects
 information and data from various sources and channels. In order to
@@ -119,8 +124,8 @@ systematic approach for this problem. The aim of the approach is to
 allow information from separate source to represent a harmonized
 picture when combined to provide the status of the world.
 
-This paper comprises of just three sections. First, the motivation and
-the problem at hand is presented and why such a framework is
+This paper comprises of three sections. First, the motivation and the
+problem at hand is presented and why such a framework is
 necessary. Secondly, we present the theory where the fundamentals of
 the principle of minimum discrimination information is
 introduced. Then we illustrate the use of this framework and
@@ -130,10 +135,15 @@ paper.
 
 \section{Motivation and Problem Statement}
 
+One of the problem first faced was to identify over the spectrum of
+the data collection method, which is more reliable and should be
+disseminated. The identification will enable us to decide which
+statistic to disseminate allowing our user to access the most reliable
+set of information.
 
-The problem was first encountered when derived statistics were
-computed, a common task in publishing official statistics. Vast amount
-of data are collected by agencies and international organization. To
+Another problem was encountered when derived statistics were computed,
+a common task in publishing official statistics. Vast amount of data
+are collected by agencies and international organization. To
 effectively present the data for policy formulation and monitoring to
 high level executives, aggregation and summarization is essential.
 
@@ -145,24 +155,43 @@ can behave vastly different depending on the tools employed. Land
 survery in contrast to estimation based on satelite images can produce
 very different figure for the same object of measurement.
 
-Likewise everything we attempt to meausre, there is an uncertainty in
-the measurement. Whether it be time passage or circumference of the
-world, there are some measurement uncertainty. This in term can be
-translated to information quality of a measurement of interest. The
-lower the measurement uncertainty, the higher the information
-quality.
-
 Various level of technological development lead to different data
 collection practice. It would be infeasible to devise a standard for
 which all data collection are equivalent, thus a framework to bring
 together information of various information quality is indispensible.
 
-To resolve this problem, an entropy approach was taken to quantify the
-information quality in order to measure the information loss and
-further minimize the information loss in the process of aggregation of
+Likewise everything we attempt to meausre, there is an uncertainty in
+the measurement under the influence of noises. Whether it be passage
+of time or the circumference of the world, there are some measurement
+uncertainty.
+
+%% This in term can be translated to information quality of a measurement
+%% of interest. The lower the measurement uncertainty, the higher the
+%% information quality.
+
+To resolve this problem, an entropy approach was taken to quantify
+information in order to measure the information loss and further
+minimize the information loss in the process of aggregation of
 information.
 
 \section{Theory}
+
+Information theory has its root in communication, where Claude
+E. Shannon laid the foundation of the field with the paper "The
+Mathematical Theory of Communication". 
+%% Elaborate on the history of information theory.
+
+The quantification of information enables us to determine which source
+to disseminate as we are restricted to disseminate only one measurable
+value.
+
+In order to quantify the information, we assume data collected by
+official sources are correct and perceive it as the signal under
+perfect condition. This is in concordance with the organization's
+policy where official sources are taken as golden measure. Based on
+this assumption, we can proceed with calculating the information loss
+when data from a different source is used in the absence of official
+data.
 
 
 \subsection{Principle of Minimum Discriminant Information and Cross-Entropy}
@@ -173,21 +202,78 @@ possible; so that the new data produces as small an information gain
 as possible.
 
 In another word, the principle states that if we have to choose
-another representation or in this case a measurment rather than the
-real value which we do not know, the information set which result in
-the least amount of information gain or uncertainty should be chosen.
+another representation when official figures are unavailable, the
+information set which result in the least amount of information gain
+or uncertainty should be chosen.
+
+Provided this, we can choose between which information is under less
+influence of noise and better represents the true quanity of
+measurement.
 
 
 \begin{align*}
   \mathrm{H}(P, Q) &=  \mathrm{H}(P) + D_{\mathrm{KL}}(P \| Q)\\
   \intertext{Where}
   H(P) &= -\sum_{i} {p(x_i) \log p(x_i)},\\
+  \intertext{and,}
   D_{\mathrm{KL}}(P\|Q) &= \sum_i \log\left(\frac{p(i)}{q(i)}\right) p(i).\\
 \end{align*}
 
+The quantity $\mathrm{H}(P, Q)$ is known as cross-entropy and it is
+the difference between the entropy of the true distribuion $H(p)$ and
+the information lost measured by the Kullbak-Leibner
+$D_{\mathrm{KL}}(P\|Q)$. 
 
-The weights of different information source can then be calculated as
-follow:
+In our case, the entropy of $p$ is equivalent in all comparison cases
+when it is applied to the official figures. Thus, we can simply
+compute the the information loss of the Kullbak-Leibner
+$D_{\mathrm{KL}}(P\|Q)$.
+
+In practical cases, the empirical Kullback-Leibner is calculated. That
+is, the index $i$ is not a single point, rather it is a binned
+density.
+
+This quantity inform us about the information loss associating with
+the employ of an alternative data source. Thus, we would choose the
+representation in which the information loss is minimised.
+
+\subsection{Maximum Information Perservation Flag Aggregation}
+
+In the case of aggregation, the procedure acts as a filter and
+information loss are inevitable. Thus, the best we can do is to
+minimise the information loss.
+
+\begin{equation}
+S_{agg} = f(S_{1}, S_{2}, \cdots, S_{n})
+\end{equation}
+
+Since we are restricted to a finite list of available symbol
+representing different information sources and only one symbol can be
+used; the loss of information is unavoidable under aggregation. The
+goal here is to choose a function $f$ which conveys maximum
+information.
+
+Using entropy, we can quantify the information associated with each
+data source. The equation then becomes:
+
+\begin{equation}
+S_{agg} = F(\max(H(S_{1}), H(S_{2}), \cdots, H(S_{n})))
+\end{equation}
+
+Where $F$ represents the conversion of the entropy to the character
+symbol representing the data source. This allows us to preserve as
+much information as possible under aggregation.
+
+
+\section{Application}
+
+The value of cross-entropy itself is not very useful for users, thus
+we have created what we call the information weights for users to
+utilize for modelling and subsequent analysis.
+
+\subsection{Information Weight}
+The weights of different information source can be calculated based on
+the Kullback-Leibner as follow:
 
 \begin{equation*}
   \omega_i = \left\{
@@ -206,15 +292,10 @@ less weight in the model or analysis.
 
 %% Read more on the theory.
 
-\subsection{Maximum Information Perservation Flag Aggregation}
-
-The same framework can also translate for flag aggregation, when
-combining different set of information sets we need to maintain as
-much information as possible. In this case, it is equivalent of taking
-the flag which is classified with the lowest weight.
 
 
-\section{Application}
+
+
 
 %% Need to mention that the Empirical Kullback-Leibner is used.
 
