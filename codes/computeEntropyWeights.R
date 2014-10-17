@@ -6,17 +6,21 @@
 ##' @export
 
 
-computeEntropyWeights = function(x, benchmark){
-    n = length(x)
-    k = n/10
-    alpha = range(c(x, benchmark))
-    x.density =
-        hist(x, breaks = seq(alpha[1], alpha[2], length = k))$density
-    benchmark.density =
-        hist(benchmark, breaks = seq(alpha[1], alpha[2], length = k))$density    
-    weights = 1/(1 + KL.empirical(benchmark.density, x.density))
-    if(weights == 1)
-        weights = 1 - 1e-5
-
+computeEntropyWeights = function (x, benchmark){
+    missIndex = union(which(is.na(x)), which(is.na(benchmark)))
+    x.nomiss = x[-missIndex]
+    benchmark.nomiss = benchmark[-missIndex]
+    n = length(x.nomiss)
+    alpha = c(x.nomiss, benchmark.nomiss)
+    k = round(log(n))
+    myBreaks = c(range(alpha), alpha[1:length(alpha) %% k == 1])
+    x.freq = hist(x.nomiss, breaks = myBreaks, plot = FALSE)$counts
+    benchmark.freq =
+        hist(benchmark.nomiss, breaks = myBreaks, plot = FALSE)$counts
+    zeroIndex = which(x.freq == 0)
+    weights = 1/(1 + KL.plugin(benchmark.freq[-zeroIndex],
+        x.freq[-zeroIndex]))
+    if (weights == 1) 
+        weights = 1 - 1e-05
     weights
 }
