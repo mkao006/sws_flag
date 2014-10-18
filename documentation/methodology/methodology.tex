@@ -64,7 +64,6 @@
 
 %% Need to think about how to present the two problem faced and solved
 %% with a single harmonized framework.
-%% 
 
 %% There are two problems, preserving the most amount of information
 %% and also use of different source of information.
@@ -102,7 +101,7 @@ of operation, one must utilize as much information as possible.
 %% Check the dates when flags were collected, also elaborate on the
 %% utilization of the flags.
 Since the introduction of the statistical working system in the
-1990's, symbols representing different source of information has been
+1990's, flags representing different source of information has been
 recorded. This practice enabled the clerk to identify whether a value
 complies with the organization policy of official values are the most
 trustworthy, and also based on experience which source is more
@@ -141,29 +140,45 @@ disseminated. The identification will enable us to decide which
 statistic to disseminate allowing our user to access the most reliable
 set of information.
 
-Another problem was encountered when derived statistics were computed,
-a common task in publishing official statistics. Vast amount of data
-are collected by agencies and international organization. To
-effectively present the data for policy formulation and monitoring to
-high level executives, aggregation and summarization is essential.
+Often an arbitrary approach is taken, some times based on experience
+or perception. For example, manual estimation is current perceived as
+better than algorithmic imputation. However, this may notnecessarily
+be true in particularly seeing the advacement of imputation methods
+which has proven to out perform human estimation. A formal assessment
+framework can assist us in identifying the better source for
+dissemination.
 
 
-Nonetheless, information often were treated as equal and assume to
-behave identical. Despite being the commonly acceptable practice, it
-is far from desirable. Data collected from various source and channel
-can behave vastly different depending on the tools employed. Land
-survery in contrast to estimation based on satelite images can produce
-very different figure for the same object of measurement.
-
-Various level of technological development lead to different data
-collection practice. It would be infeasible to devise a standard for
-which all data collection are equivalent, thus a framework to bring
-together information of various information quality is indispensible.
+Further, when data are collected and disseminated, information were
+often treated as equal and assume to behave identically. Despite being
+the commonly acceptable practice, it is far from desirable. Data
+collected from various source and channel can behave vastly different
+depending on the tools employed. Land survery in contrast to
+estimation based on satelite images can produce very different figure
+for the same object of measurement.
 
 Likewise everything we attempt to meausre, there is an uncertainty in
 the measurement under the influence of noises. Whether it be passage
-of time or the circumference of the world, there are some measurement
-uncertainty.
+of time or the circumference of the world in the past, there are some
+measurement uncertainty.
+
+Various level of technological development lead to different data
+collection practice. It would be infeasible to devise a standard for
+which all data collection are equivalent, thus a framework to enable
+users to account for data of various information quality is
+indispensible.
+
+Another common problem encountered when derived statistics were
+computed, a common task in publishing official statistics.  Vast
+amount of data are collected by agencies and international
+organization. To effectively present the data for policy formulation
+and monitoring to high level executives, aggregation and summarization
+is essential. 
+
+In the current working system, an aggregation is associated with the
+flag of "C" representing that the value was computed. However, this
+results in a large amount of information loss. Information on the
+sources of data collection is unpreserved and lost. 
 
 %% This in term can be translated to information quality of a measurement
 %% of interest. The lower the measurement uncertainty, the higher the
@@ -224,14 +239,15 @@ the difference between the entropy of the true distribuion $H(p)$ and
 the information lost measured by the Kullbak-Leibner
 $D_{\mathrm{KL}}(P\|Q)$. 
 
-In our case, the entropy of $p$ is equivalent in all comparison cases
-when it is applied to the official figures. Thus, we can simply
-compute the the information loss of the Kullbak-Leibner
-$D_{\mathrm{KL}}(P\|Q)$.
+%% In our case, the entropy of $p$ is equivalent in all comparison cases
+%% when it is applied to the official figures. Thus, we can simply
+%% compute the the information loss of the Kullbak-Leibner
+%% $D_{\mathrm{KL}}(P\|Q)$.
 
-In practical cases, the empirical Kullback-Leibner is calculated. That
-is, the index $i$ is not a single point, rather it is a binned
-density.
+In practical cases, the empirical Kullback-Leibner is
+calculated. Values are binned and the relative frequency is used to
+approximate the real density $p(x)$ and $q(x)$. That is, the index $i$
+is not a single point, rather it is a binned density.
 
 This quantity inform us about the information loss associating with
 the employ of an alternative data source. Thus, we would choose the
@@ -239,9 +255,12 @@ representation in which the information loss is minimised.
 
 \subsection{Maximum Information Perservation Flag Aggregation}
 
-In the case of aggregation, the procedure acts as a filter and
-information loss are inevitable. Thus, the best we can do is to
-minimise the information loss.
+After measuring the information, we can apply to the process of
+aggregation when the maximum amount of information is preserved under
+aggreagtion.
+
+In a typical aggregation scenario or computation of derived
+statistics, we have:
 
 \begin{equation}
 S_{agg} = f(S_{1}, S_{2}, \cdots, S_{n})
