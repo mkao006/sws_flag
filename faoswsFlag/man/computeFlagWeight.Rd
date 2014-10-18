@@ -3,8 +3,7 @@
 \alias{computeFlagWeight}
 \title{Function to compute the weights of each flag based on the history}
 \usage{
-computeFlagWeight(history, officialFlag = "", method = c("entropy",
-  "similarity"))
+computeFlagWeight(history, officialFlag = "", method = "entropy")
 }
 \arguments{
 \item{history}{The history of data queried from the api}
