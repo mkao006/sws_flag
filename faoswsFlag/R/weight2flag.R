@@ -9,6 +9,6 @@
 
 weight2flag = function(flagObservationWeight,
                        flagTable = faoswsFlagTable){
-    index = match(flagObservationWeight, flagTable$flagObservationWeight)
+    index = match(flagObservationWeight, flagTable$flagObservationWeights)
     as.character(flagTable$flagObservationStatus[index])
 }
