@@ -14,8 +14,12 @@ package.skeleton("faoswsFlag", code_files = paste("./codes/",
 
 ## build the flag table data
 dir.create("faoswsFlag/data")
-faoswsFlagTable = read.csv(file = "flag_table.csv", header = TRUE)
+faoswsFlagTable = read.csv(file = "flag_table.csv", header = TRUE,
+                           stringsAsFactors = FALSE)
 save(faoswsFlagTable, file = "faoswsFlag/data/faoswsFlagTable.RData")
+flagConversionTable = read.csv(file = "flagConversionTable.csv",
+                               stringsAsFactors = FALSE)
+save(flagConversionTable, file = "faoswsFlag/data/flagConversionTable.RData")
 
 ## Include the DESCRIPTION file
 file.copy(from = "./DESCRIPTION", to = "faoswsFlag/",
@@ -30,8 +34,8 @@ roxygenize("faoswsFlag")
 dir.create("./faoswsFlag/vignettes/")
 dir.create("./faoswsFlag/inst/")
 dir.create("./faoswsFlag/inst/doc/")
-file.copy(from = "./documentation/faoswsFlag/faoswsFlag.pdf",
-          to = "./faoswsFlag/inst/doc/", overwrite = TRUE)
+# file.copy(from = "./documentation/faoswsFlag/faoswsFlag.pdf",
+#           to = "./faoswsFlag/inst/doc/", overwrite = TRUE)
 file.copy(from = "./documentation/faoswsFlag/faoswsFlag.Rnw",
           to = "./faoswsFlag/vignettes/", overwrite = TRUE)
 
