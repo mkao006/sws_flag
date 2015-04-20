@@ -22,6 +22,8 @@
 ##' aggregateObservationFlag(c("T", "T"), c("M", ""), c("I", ""))
 ##' 
 ##' @seealso \code{\link{sum}}
+##' 
+##' @return A character vector containing the aggregated flags.
 ##'
 ##' @export
 ##' 
