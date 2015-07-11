@@ -1,11 +1,10 @@
 Package: faoswsFlag
 Type: Package
 Title: Package to manipulate and aggregate observational status
-Version: 0.1.2
-Date: 2015-04-06
+Version: 0.2.0
+Date: 2015-07-11
 Authors@R: c(person("Micheal. C. J.", "Kao", role = c("aut", "cre"), email = "michael.kao@fao.org"))
 Author: Michael. C. J. Kao <michael.kao@fao.org>
-Maintainer: Josh Browning <joshua.browning@fao.org> and Alex Maltrunich <aleksander.maltrunich@fao.org>
 Description: This package provides functions to manipulate and aggregate observational status flags.
 License: GPL (>= 3)
 LazyData: yes
