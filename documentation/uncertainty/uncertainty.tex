@@ -1,0 +1,620 @@
+%\VignetteIndexEntry{faoswsFlag:A package to perform flag aggregation and much more}
+%\VignetteEngine{knitr::knitr}
+\documentclass[nojss]{jss}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage{url}
+\usepackage[sc]{mathpazo}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=2.5cm,rmargin=2.5cm}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+\usepackage{breakurl}
+\usepackage{hyperref}
+\usepackage[ruled, vlined]{algorithm2e}
+\usepackage{mathtools}
+%% \usepackage{draftwatermark}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{mathrsfs}
+\usepackage{multirow}
+%% \usepackage{mathbbm}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator*{\argmax}{\arg\!\max}
+%% \linespread{1.3}
+\setlength{\parskip}{1em}
+
+\title{\bf Parameterisation of Food Balance Sheet Uncertainty Distribution}
+
+\author{Michael. C. J. Kao\\ Food and Agriculture Organization \\ of
+  the United Nations}
+
+\Plainauthor{Michael. C. J. Kao} 
+
+\Plaintitle{Parameterisation of Food Balance Sheet Uncertainty Distribution}
+
+\Shorttitle{Parameterisation of Food Balance Sheet Uncertainty Distribution}
+
+\Abstract{ 
+
+  In this paper, we briefly illustrate the use of the
+  \pkg{faoswsFlag} package to parameterise the uncertainty
+  distribution based on the confidence about a value.
+  
+  
+  
+  
+  
+}
+
+\Keywords{Uncertainty, Distribution}
+\Plainkeywords{Uncertainty, Distribution}
+
+\Address{
+  Michael. C. J. Kao\\
+  Economics and Social Statistics Division (ESS)\\
+  Economic and Social Development Department (ES)\\
+  Food and Agriculture Organization of the United Nations (FAO)\\
+  Viale delle Terme di Caracalla 00153 Rome, Italy\\
+  E-mail: \email{michael.kao@fao.org}\\
+  URL: \url{https://github.com/mkao006/sws_r_api/tree/master/faoswsFlag}
+}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+
+
+
+\section{Introduction}
+
+In preparing the Food Balance Sheet (FBS), one of the most
+indispenable yet difficult operation is the balancing mechanism. Due
+to the imperfection of data collection, estimation and imputation in
+the real world, it is the norm that the FBS is unbalanced and does not
+satisfy the equality constraint as first sight. Thus, a balancing
+mechanism is essential for satisfying the equality between the demand
+and supply of the FBS.
+
+%% Give a footnote to the construction of the FBS.
+
+%% Taken from the overview paper
+In current practice, the choice of a variable as a balancing item
+often reflects the availability of data (or the lack of data), rather
+than a clear economic rationale and empirical evidence. It is
+therefore not surprising that different SUA compilers/SUA approaches
+have chosen different variables as their balancing items. USDA's
+balances, for instance, use feed (and residual use) as the balancing
+item, while the FBS often use food to balance supply and
+demand. Conveniently, the XCBS approach often chooses whatever
+variable is not explicitly available. Clearly, none of these
+approaches renders a satisfactory solution to the problem and, no
+matter what variable is used as the balancing item, this variable is
+fraught with the measurement errors of all other variables. Given the
+fact that there is no a priori reason to assume that the measurement
+errors cancel out, the balancing item is bound to be the most
+inaccurate variable of the balance.  Extending the logic to the Food
+Balance Sheets, using food as the balancing item would therefore be
+the least suitable solution.
+
+%% Foot note to the problems.
+Problems associated with the current approach motivated the research
+team to seek a method in where inequality occuring in the FBS to be
+allocated to various elements based on a logical reasoning rather than
+arbitrary allocation.
+
+One method to handling the problem is to balance the FBS on a
+probabilistic basis. Each element is assumed to have a certain level
+of uncertainty, and the allocation of the imbalance will depends on
+the uncertainty of each element. That is, the smaller the uncertainty
+we have with a particular element, the less we should apportion the
+imbalance to that particular element. In the extreme case where we
+have perfect certainty about an element, than no imbalance should be
+added to the element.
+
+
+In order to proceed with the probabilistic balancing mechanism,
+formulation of distribution for each of the elements in the FBS is
+necessary. The specification of the distributions undermines the
+validity of the balancing mechanism, and thus a consistent and logical
+construction of the distribution is crucial. The distributions should
+reflect the underlying uncertainty associated with each elements in
+order for the balancing mechanism to seek the optimal solution under
+the equality constraint of the FBS.
+
+A framework guiding the specification of the distributions and the
+parameterisations is crucial. The absence of such framework generates
+inconsistency and paradox, further the use of the term probability
+maximisation is a disguise for a procedure which does not bear any
+meaning.
+
+
+The paper is organised as follow. An introduction to the method and
+some brief theory will be provided. we will then provide illustrations
+of how the package provide a consistent framework for parameterise the
+uncertainty distribution of the FBS. 
+
+A corresponding table representing the weights or confindence of
+various data sources is assumed to have been constructed. For more
+details on the construction of the flag table, please refer to the
+faoswsFlag vignette.
+
+
+
+\section{The Data}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}\hlstd{(faoswsFlag)}
+\hlkwd{library}\hlstd{(truncnorm)}
+
+\hlcom{## Create new flag table}
+
+\hlstd{exampleFlagTable} \hlkwb{=}
+    \hlkwd{data.frame}\hlstd{(}\hlkwc{flagObservationStatus} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{""}\hlstd{,} \hlstr{"E"}\hlstd{,} \hlstr{"I"}\hlstd{),}
+               \hlkwc{flagObservationWeights} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{0.2}\hlstd{,} \hlnum{0.6}\hlstd{))}
+
+\hlcom{## Create artificial example for Supply and Utilisation Account}
+\hlstd{exampleSUA.df} \hlkwb{=}
+    \hlkwd{data.frame}\hlstd{(}\hlkwc{product} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"wheat"}\hlstd{,} \hlstr{"wheat flour"}\hlstd{),}
+               \hlkwc{productionValue} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{100}\hlstd{,} \hlnum{96}\hlstd{),}
+               \hlkwc{productionFlag} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{""}\hlstd{,} \hlstr{"E"}\hlstd{),}
+               \hlkwc{importValue} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{10}\hlstd{,} \hlnum{0}\hlstd{),}
+               \hlkwc{importFlag} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{""}\hlstd{,} \hlstr{""}\hlstd{),}
+               \hlkwc{exportValue} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{50}\hlstd{,} \hlnum{0}\hlstd{),}
+               \hlkwc{exportFlag} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{""}\hlstd{,} \hlstr{""}\hlstd{),}
+               \hlkwc{foodValue} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{80}\hlstd{),}
+               \hlkwc{foodFlag} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"E"}\hlstd{,} \hlstr{"E"}\hlstd{),}
+               \hlkwc{seedValue} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{20}\hlstd{,} \hlnum{0}\hlstd{),}
+               \hlkwc{seedFlag} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{""}\hlstd{,} \hlstr{"E"}\hlstd{),}
+               \hlkwc{wasteValue} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{20}\hlstd{,} \hlnum{16}\hlstd{),}
+               \hlkwc{wasteFlag} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"I"}\hlstd{,} \hlstr{"E"}\hlstd{),}
+               \hlkwc{foodManuValue} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{100}\hlstd{,} \hlnum{0}\hlstd{),}
+               \hlkwc{foodManuFlag} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"E"}\hlstd{,} \hlstr{""}\hlstd{))}
+
+\hlcom{## Create artificial example for the unbalanced Food Balance Sheet}
+\hlstd{exampleFBS.df} \hlkwb{=}
+    \hlkwd{data.frame}\hlstd{(}\hlkwc{product} \hlstd{=} \hlstr{"wheat and products"}\hlstd{,}
+               \hlkwc{productionValue} \hlstd{=} \hlnum{220}\hlstd{,}
+               \hlkwc{importValue} \hlstd{=} \hlnum{10}\hlstd{,}
+               \hlkwc{exportValue} \hlstd{=} \hlnum{50}\hlstd{,}
+               \hlkwc{foodValue} \hlstd{=} \hlnum{100}\hlstd{,} \hlkwc{seedValue} \hlstd{=} \hlnum{20}\hlstd{,}
+               \hlkwc{wasteValue} \hlstd{=} \hlnum{40}\hlstd{,}
+               \hlkwc{foodManuValue} \hlstd{=} \hlnum{100}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\section{The Methodology}
+
+After observing a single value, how does one imposes a probability
+distribution that is consistent? In order to impose a distribution, we
+will need to impose something which reflects the uncertainty of the
+value we have observed.  Similar to assigning a probability to whether
+it will rain tomorrow, we can assign a probability to the observed
+value reflecting our knowledge, experience and other information that
+is not explicitly incorporated. After assigning the probability to the
+observed value, we then have sufficient information to specify the
+distribution.
+
+
+\subsection{Quantifying Uncertainty}
+
+To measure a piece of information, one can use the formula of self
+information which is a measure of the information content defined as
+follow,
+
+\begin{align}
+  I = -ln(P) \, P \in [0, 1]
+\end{align}
+
+
+Where P is the probability or the confidence about the accuracy of the
+value assigned to the observed value in the first place. The natural
+logarithm is adopted here, but logarithm of any base can be used. This
+is a measure of the uncertainty condition on the confidence we have
+about the observed value. The log ensures that the uncertainty can be
+added across different items. The greater the I, the larger the
+associated uncertainty, that is, the lower the confidence we assign to
+the particular value, the higher the uncertainty. When the confidence
+is 0, or with 0\% certainty, then I is infinite or infinite
+uncertainty; on the other hand, when the confidence is 1 then the the
+value is known with certain.
+
+The logarithm also ensures that the uncertainty is
+additive. Essentially, the sum of the uncertainty is the log of the
+products of the probabilities assigned to the values. That is, it is
+the log of the joint probability assuming independence.
+
+By assuming that the observed value is the expected value (the
+expected value here refers to the value with the highest probability,
+that is, the mode) and the self information as the expected
+information or entropy of the distribution, the parameterisation of
+any chosen distribution then follows naturally. Given the level of
+uncertainty associated with each element, then regardless of the
+choice of distributions, one can always parametrize the distribution
+where the uncertainty is held the same. This provides a consistent
+framework for specifying distributions in which the uncertainty for
+each element is consistent and relative amongst all elements.
+
+The following illustration provides an example of how this framework
+can provide consistent parameterization of various distribution while
+maintaining the same level of uncertainty with the value. Take the
+wheat production example in the introduction section again, when we
+have 80\% confidence about the observed value of 22,000 tonnes of
+wheat production in Australia, then the amount of uncertainty given
+the provided information can then be calculated as follow
+
+\begin{align}
+  I = -ln(0.8) \approx 0.2231
+\end{align}
+
+In order to preserve this uncertainty associated with this piece of
+information, we need to preserve the entropy of the
+distributions. That is, regardless which distribution we choose we
+need to parameterise the distribution such that the entropy is
+equivalent to the same nat of information available.
+
+The main reason to use the entropy rather than the standard deviation
+is because it is unit free and does not depends on the size of the
+value. If we were to impose uncertainty between two values, then the
+uncertainty associated with both value should be set respectively to
+the confidence given independent of the magnitude of the value. For
+example, if we we have observed 2000 tonnes of wheat production and
+1000 tonnes of food while the confidence in the two value are
+identical, then the balance should be 1500 tonnes of production and
+food. If we were to base the uncertainty on standard deviation or
+percentage of variation, then the larger value will have large
+standard deviation of variation based on percentage and thus the final
+value will be closer to 1000 even though we have equal confidence in
+both values.
+
+\subsection{Parameterise Distribution Given Uncertainty}
+
+To parameterise a given distribution provided the uncertainty computed
+above is a simple task.
+
+One simply choose the distribution then set the entropy equivalent to
+the uncertainty and solve for the parameters of the distribution.
+
+That is, we solve for the following identity.
+
+\begin{align}
+  I = H
+\end{align}
+
+Where $I$ is the self-information or uncertainty computed, and $H$ is
+the entropy of the chosen distribution.
+
+
+Take the normal distribution for example which has the following entropy equation:
+
+\begin{align}
+  H = \frac{1}{2}ln(2\pi e\sigma^2)
+\end{align}
+
+We can see the only parameter of the normal distribution that governs
+the entropy is $\sigma$ or the standard deviation. Then Substitude $H$
+with $I$ and solve for $\sigma$, we obtain the following.
+
+\begin{align}
+  \sigma = \sqrt{\frac{e^{2I}}{2\pi e}} = \sqrt{\frac{e^{2(-ln(0.8))}}{2\pi e}} \approx 0.3025
+\end{align}
+
+or simply,
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{parameterise}\hlstd{(}\hlkwc{obsValue} \hlstd{=} \hlnum{22000}\hlstd{,} \hlkwc{selfInformation} \hlstd{=} \hlopt{-}\hlkwd{log}\hlstd{(}\hlnum{0.8}\hlstd{),} \hlkwc{distribution} \hlstd{=} \hlstr{"normal"}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## $mean
+## [1] 22000
+## 
+## $sd
+## [1] 0.3024634
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+That is, with the given observed value and confidence, the associated
+distribution is:
+
+\begin{align}
+  W \sim N(22,000, 0.3025)
+\end{align}
+
+Following the same example, we can solve for the parameterisation of a
+Cauchy distribution given the same level of uncertainty.
+
+\begin{align}
+  \gamma = e^{I - ln(4\pi)} = e^{-ln(0.8) - ln(4\pi)} \approx 0.0995
+\end{align}
+and,
+
+\begin{align}
+  W \sim Cauchy(22,000, 0.0995)
+\end{align}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{parameterise}\hlstd{(}\hlkwc{obsValue} \hlstd{=} \hlnum{22000}\hlstd{,} \hlkwc{selfInformation} \hlstd{=} \hlopt{-}\hlkwd{log}\hlstd{(}\hlnum{0.8}\hlstd{),} \hlkwc{distribution} \hlstd{=} \hlstr{"cauchy"}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## $location
+## [1] 22000
+## 
+## $scale
+## [1] 0.09947184
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+There are no analytical solution for the parameterisation of the
+truncated normal distribution, however, a numerical solution is
+provided by the package.
+
+
+
+\begin{align}
+  W \sim trN(22,000, 0.3025)
+\end{align}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{parameterise}\hlstd{(}\hlkwc{obsValue} \hlstd{=} \hlnum{22000}\hlstd{,}
+             \hlkwc{selfInformation} \hlstd{=} \hlopt{-}\hlkwd{log}\hlstd{(}\hlnum{0.8}\hlstd{),}
+             \hlkwc{distribution} \hlstd{=} \hlstr{"truncNorm"}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## $mean
+## [1] 22000
+## 
+## $sd
+## [1] 0.3024757
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+We can see that the standard deviation of the truncated normal is
+marginally larger than the normal distribution above. This is due to
+the fact to maintain the same level of uncertainty while reduced
+support space, one has to increase the standard deviation.
+  
+  
+
+%% Add a plot of all the distributions offered in the packag except
+%% for the exponential distribution.
+
+\section{Illustration}
+Take the example data, the first step is to construct the uncertainty
+of each FBS element based on the flags in the SUA.
+
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Select all the flag columns}
+\hlstd{flagColumns} \hlkwb{=} \hlkwd{grep}\hlstd{(}\hlstr{"Flag"}\hlstd{,} \hlkwd{colnames}\hlstd{(exampleSUA.df),} \hlkwc{value} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+
+\hlcom{## First we convert the flags to weights or confidence}
+\hlstd{(weightsSUA.df} \hlkwb{=} \hlkwd{data.frame}\hlstd{(}\hlkwd{lapply}\hlstd{(exampleSUA.df[, flagColumns], flag2weight)))}
+\end{alltt}
+\begin{verbatim}
+##   productionFlag importFlag exportFlag foodFlag seedFlag wasteFlag foodManuFlag
+## 1           1.00          1          1     0.75     1.00      0.50         0.75
+## 2           0.75          1          1     0.75     0.75      0.75         1.00
+\end{verbatim}
+\begin{alltt}
+\hlcom{## Then we compute the self-information}
+\hlstd{(selfInfoSUA.df} \hlkwb{=} \hlkwd{data.frame}\hlstd{(}\hlkwd{lapply}\hlstd{(weightsSUA.df, selfInformation)))}
+\end{alltt}
+\begin{verbatim}
+##   productionFlag importFlag exportFlag  foodFlag  seedFlag wasteFlag
+## 1      0.0000000          0          0 0.2876821 0.0000000 0.6931472
+## 2      0.2876821          0          0 0.2876821 0.2876821 0.2876821
+##   foodManuFlag
+## 1    0.2876821
+## 2    0.0000000
+\end{verbatim}
+\begin{alltt}
+\hlcom{## Then we sum up the self-information for each element to obtain }
+\hlcom{## the uncertainty of each element.}
+\hlstd{totalInfo.df} \hlkwb{=} \hlkwd{data.frame}\hlstd{(}\hlkwd{lapply}\hlstd{(selfInfoSUA.df, sum))}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+To create the distribution, we simply prodive the function
+`distributionise` the observered value, the total information computed
+from the flag andthe desired distribution.
+
+The function returns a list of two object. The first is the
+distribution function with the parameters computed, while the second
+object is a list with the corresponding values of the parameter.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Parameterise the production element with a Normal distribution}
+\hlkwd{distributionise}\hlstd{(}\hlkwc{obsValue} \hlstd{= exampleFBS.df}\hlopt{$}\hlstd{productionValue,}
+                \hlkwc{selfInformation} \hlstd{= totalInfo.df}\hlopt{$}\hlstd{productionFlag,}
+                \hlkwc{distribution} \hlstd{=} \hlstr{"normal"}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## $pdf
+## function (x) 
+## dnorm(x, mean = mean, sd = sd)
+## <environment: 0x2c22b98>
+## 
+## $parameters
+## $parameters$mean
+## [1] 220
+## 
+## $parameters$sd
+## [1] 0.3226276
+\end{verbatim}
+\begin{alltt}
+\hlcom{## Parameterise the production element with a Truncated Normal distribution}
+\hlkwd{distributionise}\hlstd{(}\hlkwc{obsValue} \hlstd{= exampleFBS.df}\hlopt{$}\hlstd{productionValue,}
+                \hlkwc{selfInformation} \hlstd{= totalInfo.df}\hlopt{$}\hlstd{productionFlag,}
+                \hlkwc{distribution} \hlstd{=} \hlstr{"truncNorm"}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## $pdf
+## function (x) 
+## dtruncnorm(x, a = 0, b = Inf, mean = mean, sd = sd)
+## <environment: 0x2b71480>
+## 
+## $parameters
+## $parameters$mean
+## [1] 220
+## 
+## $parameters$sd
+## [1] 0.3226171
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{productionDist} \hlkwb{=}
+    \hlkwd{distributionise}\hlstd{(}\hlkwc{obsValue} \hlstd{= exampleFBS.df}\hlopt{$}\hlstd{productionValue,}
+                    \hlkwc{selfInformation} \hlstd{= totalInfo.df}\hlopt{$}\hlstd{productionFlag,}
+                    \hlkwc{distribution} \hlstd{=} \hlstr{"truncNorm"}\hlstd{)}
+
+
+\hlstd{importDist} \hlkwb{=}
+    \hlkwd{distributionise}\hlstd{(}\hlkwc{obsValue} \hlstd{= exampleFBS.df}\hlopt{$}\hlstd{importValue,}
+                    \hlkwc{selfInformation} \hlstd{= totalInfo.df}\hlopt{$}\hlstd{importFlag,}
+                    \hlkwc{distribution} \hlstd{=} \hlstr{"truncNorm"}\hlstd{)}
+
+
+\hlstd{exportDist} \hlkwb{=}
+    \hlkwd{distributionise}\hlstd{(}\hlkwc{obsValue} \hlstd{= exampleFBS.df}\hlopt{$}\hlstd{exportValue,}
+                    \hlkwc{selfInformation} \hlstd{= totalInfo.df}\hlopt{$}\hlstd{exportFlag,}
+                    \hlkwc{distribution} \hlstd{=} \hlstr{"truncNorm"}\hlstd{)}
+
+
+\hlstd{foodDist} \hlkwb{=}
+    \hlkwd{distributionise}\hlstd{(}\hlkwc{obsValue} \hlstd{= exampleFBS.df}\hlopt{$}\hlstd{foodValue,}
+                    \hlkwc{selfInformation} \hlstd{= totalInfo.df}\hlopt{$}\hlstd{foodFlag,}
+                    \hlkwc{distribution} \hlstd{=} \hlstr{"truncNorm"}\hlstd{)}
+
+
+\hlstd{seedDist} \hlkwb{=}
+    \hlkwd{distributionise}\hlstd{(}\hlkwc{obsValue} \hlstd{= exampleFBS.df}\hlopt{$}\hlstd{seedValue,}
+                    \hlkwc{selfInformation} \hlstd{= totalInfo.df}\hlopt{$}\hlstd{seedFlag,}
+                    \hlkwc{distribution} \hlstd{=} \hlstr{"truncNorm"}\hlstd{)}
+
+
+\hlstd{wasteDist} \hlkwb{=}
+    \hlkwd{distributionise}\hlstd{(}\hlkwc{obsValue} \hlstd{= exampleFBS.df}\hlopt{$}\hlstd{wasteValue,}
+                    \hlkwc{selfInformation} \hlstd{= totalInfo.df}\hlopt{$}\hlstd{wasteFlag,}
+                    \hlkwc{distribution} \hlstd{=} \hlstr{"truncNorm"}\hlstd{)}
+
+
+\hlstd{foodManuDist} \hlkwb{=}
+    \hlkwd{distributionise}\hlstd{(}\hlkwc{obsValue} \hlstd{= exampleFBS.df}\hlopt{$}\hlstd{foodManuValue,}
+                    \hlkwc{selfInformation} \hlstd{= totalInfo.df}\hlopt{$}\hlstd{foodManuFlag,}
+                    \hlkwc{distribution} \hlstd{=} \hlstr{"truncNorm"}\hlstd{)}
+
+
+\hlstd{ll} \hlkwb{=} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{)\{}
+    \hlopt{-}\hlkwd{log}\hlstd{(productionDist}\hlopt{$}\hlkwd{pdf}\hlstd{(x[}\hlnum{1}\hlstd{]))} \hlopt{-}
+        \hlkwd{log}\hlstd{(importDist}\hlopt{$}\hlkwd{pdf}\hlstd{(x[}\hlnum{2}\hlstd{]))} \hlopt{-}
+            \hlkwd{log}\hlstd{(exportDist}\hlopt{$}\hlkwd{pdf}\hlstd{(x[}\hlnum{3}\hlstd{]))} \hlopt{-}
+                \hlkwd{log}\hlstd{(foodDist}\hlopt{$}\hlkwd{pdf}\hlstd{(x[}\hlnum{4}\hlstd{]))} \hlopt{-}
+                    \hlkwd{log}\hlstd{(seedDist}\hlopt{$}\hlkwd{pdf}\hlstd{(x[}\hlnum{5}\hlstd{]))} \hlopt{-}
+                        \hlkwd{log}\hlstd{(wasteDist}\hlopt{$}\hlkwd{pdf}\hlstd{(x[}\hlnum{6}\hlstd{]))} \hlopt{-}
+                            \hlkwd{log}\hlstd{(foodManuDist}\hlopt{$}\hlkwd{pdf}\hlstd{(x[}\hlnum{7}\hlstd{]))}
+\hlstd{\}}
+
+\hlstd{constraint} \hlkwb{=} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{)\{}
+    \hlstd{x[}\hlnum{1}\hlstd{]} \hlopt{+} \hlstd{x[}\hlnum{2}\hlstd{]} \hlopt{+} \hlstd{x[}\hlnum{3}\hlstd{]} \hlopt{-} \hlstd{x[}\hlnum{4}\hlstd{]} \hlopt{-} \hlstd{x[}\hlnum{5}\hlstd{]} \hlopt{-} \hlstd{x[}\hlnum{6}\hlstd{]} \hlopt{-} \hlstd{x[}\hlnum{7}\hlstd{]}
+\hlstd{\}}
+
+\hlkwd{library}\hlstd{(Rsolnp)}
+\hlcom{## Double check this solution, the resulting likelihood is infinite}
+\hlstd{balancedFBS} \hlkwb{=}
+    \hlkwd{solnp}\hlstd{(}\hlkwc{pars} \hlstd{=} \hlkwd{as.numeric}\hlstd{(exampleFBS.df[,} \hlopt{-}\hlnum{1}\hlstd{]),}
+          \hlkwc{fun} \hlstd{= ll,}
+          \hlkwc{eqfun} \hlstd{= constraint,}
+          \hlkwc{eqB} \hlstd{=} \hlnum{0}\hlstd{,}
+          \hlkwc{control} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{tol} \hlstd{=}\hlnum{1e-10}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## 
+## Iter: 1 fn: 1e+24	 Pars:  206.73973   9.97260  49.31507 102.73973  20.10959  40.43836 102.73973
+## Iter: 2 fn: 1e+24	 Pars:  206.73973   9.97260  49.31507 102.73973  20.10959  40.43836 102.73973
+## solnp--> Completed in 2 iterations
+\end{verbatim}
+\begin{alltt}
+\hlstd{balancedFBS}\hlopt{$}\hlstd{par}
+\end{alltt}
+\begin{verbatim}
+## [1] 206.739726   9.972603  49.315068 102.739726  20.109589  40.438356 102.739726
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\section{Conclusion}
+
+\end{document}
