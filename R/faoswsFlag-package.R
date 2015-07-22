@@ -10,5 +10,6 @@
 ##' 
 ##' @import entropy
 ##' @import data.table
+##' @import truncnorm
 ##' 
 NULL

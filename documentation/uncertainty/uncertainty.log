@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.7.2)  22 JUL 2015 09:22
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.7.2)  22 JUL 2015 10:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -764,11 +764,11 @@ Overfull \hbox (5.47499pt too wide) has occurred while \output is active
  []
 
 [9]
-Underfull \vbox (badness 10000) detected at line 804
+Underfull \vbox (badness 10000) detected at line 805
  []
 
 
-Underfull \vbox (badness 10000) detected at line 804
+Underfull \vbox (badness 10000) detected at line 805
  []
 
 
@@ -777,24 +777,24 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
  []
 
 [10]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 809.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 810.
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 [] \T1/pplx/m/n/10.95 11
  []
 
 [11]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 809.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 810.
  (./uncertainty.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 809.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 809.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 810.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 810.
 Package rerunfilecheck Info: File `uncertainty.out' has not changed.
 (rerunfilecheck)             Checksum: 1A12C2CAD7F497002E7AC69C7CDC7C4E;678.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 809.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 810.
  ) 
 Here is how much of TeX's memory you used:
  10252 strings out of 493304
@@ -813,7 +813,7 @@ t/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts
 c/mathpazo/fplmri.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/u
 plb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on uncertainty.pdf (11 pages, 143170 bytes).
+Output written on uncertainty.pdf (11 pages, 144429 bytes).
 PDF statistics:
  152 PDF objects out of 1000 (max. 8388607)
  126 compressed objects within 2 object streams

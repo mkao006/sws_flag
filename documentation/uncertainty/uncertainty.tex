@@ -214,7 +214,7 @@ An example flag table is provided along with the package.
 
 
 % latex table generated in R 3.2.1 by xtable 1.7-4 package
-% Wed Jul 22 09:22:39 2015
+% Wed Jul 22 10:16:26 2015
 \begin{table}[ht]
 \centering
 \begin{tabular}{cc}
@@ -244,7 +244,7 @@ purpose.
 
 
 % latex table generated in R 3.2.1 by xtable 1.7-4 package
-% Wed Jul 22 09:22:39 2015
+% Wed Jul 22 10:16:26 2015
 \begin{table}[ht]
 \centering
 \begin{tabular}{cccccccccc}
@@ -697,7 +697,7 @@ object is a list with the corresponding values of the parameter.
 ## $pdf
 ## function (x) 
 ## dnorm(x, mean = mean, sd = sd)
-## <environment: 0x51fbbe0>
+## <environment: 0x44cf450>
 ## 
 ## $parameters
 ## $parameters$mean
@@ -716,7 +716,7 @@ object is a list with the corresponding values of the parameter.
 ## $pdf
 ## function (x) 
 ## dtruncnorm(x, a = 0, b = Inf, mean = mean, sd = sd)
-## <environment: 0x581ad48>
+## <environment: 0x42214b0>
 ## 
 ## $parameters
 ## $parameters$mean
@@ -775,7 +775,8 @@ distribution and specify the constraints for the balancing of the FBS.
 
 \hlcom{## Create the contraint funciton}
 \hlstd{constraint} \hlkwb{=} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{)\{}
-    \hlcom{## Productin + Import - Export - Food - Loss = 0}
+    \hlcom{## (1) Productin + Import - Export - Food - Loss = 0}
+    \hlcom{## (2) and (3) holding import and export constant}
     \hlkwd{c}\hlstd{(x[}\hlnum{1}\hlstd{]} \hlopt{+} \hlstd{x[}\hlnum{2}\hlstd{]} \hlopt{-} \hlstd{x[}\hlnum{3}\hlstd{]} \hlopt{-} \hlstd{x[}\hlnum{4}\hlstd{]} \hlopt{-} \hlstd{x[}\hlnum{5}\hlstd{], x[}\hlnum{2}\hlstd{], x[}\hlnum{3}\hlstd{])}
 \hlstd{\}}
 

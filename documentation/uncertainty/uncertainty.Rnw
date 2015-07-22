@@ -64,7 +64,6 @@
 <<setup, include=FALSE, cache=FALSE>>=
 library(knitr)
 library(xtable)
-library(truncnorm)
 opts_chunk$set(fig.path='figure/', fig.align='center', fig.show='hold',
                warning=FALSE, message=FALSE, error=FALSE, tidy=FALSE, 
                results='markup', eval=TRUE, echo=TRUE, cache=FALSE)
@@ -554,9 +553,13 @@ ggplot(data.frame(x = seq(cauchy$parameters$location - 10 * cauchy$parameters$sc
     stat_function(fun = function(x){
                       distributionise(obsValue = obsValue, selfInformation = selfInfo, 
                                       distribution = "logNorm")$pdf(x)
-                  }, geom = "line", aes(colour = "Log-Normal")) +        
-    scale_colour_manual("", values = c("blue", "purple", "orange", "gold", "steelblue"), 
-                        breaks = c("Cauchy", "Normal", "Truncated-Normal", "Exponential", "Log-Normal")) +  
+                  }, geom = "line", aes(colour = "Log-Normal")) + 
+    stat_function(fun = function(x){
+                      distributionise(obsValue = obsValue, selfInformation = selfInfo, 
+                                      distribution = "weibull")$pdf(x)
+                  }, geom = "line", aes(colour = "Weibull")) + 
+    scale_colour_manual("", values = c("blue", "purple", "orange", "gold", "steelblue", "red"), 
+                        breaks = c("Cauchy", "Normal", "Truncated-Normal", "Exponential", "Log-Normal", "Weibull")) +  
     theme(legend.position="top") +
     labs(x = "", y = "")
 
@@ -669,7 +672,8 @@ ll = function(x){
 
 ## Create the contraint funciton
 constraint = function(x){
-    ## Productin + Import - Export - Food - Loss = 0
+    ## (1) Productin + Import - Export - Food - Loss = 0
+    ## (2) and (3) holding import and export constant
     c(x[1] + x[2] - x[3] - x[4] - x[5], x[2], x[3])
 }
 
