@@ -9,5 +9,6 @@
 ##' @export
 
 entropyLogNorm = function(mean, sd){
-    mean + log(sqrt(2 * pi * exp(1)) * sd)
+    ## mean + log(sqrt(2 * pi * exp(1)) * sd)
+    1/2 + 1/2 * log(2 * pi * sd^2) + mean
 }
