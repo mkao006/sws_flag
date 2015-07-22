@@ -10,7 +10,8 @@ License: GPL (>= 3)
 LazyData: yes
 Import:
     entropy (>= 1.2.0),
-    data.table (>= 1.9.2)
+    data.table (>= 1.9.2),
+    truncnorm (>= 1.0-7)
 ZipData: no
 VignetteBuilder: knitr	
 Suggests: knitr, ggplot2
