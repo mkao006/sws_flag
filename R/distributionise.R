@@ -36,6 +36,10 @@ distributionise = function(obsValue, selfInformation, distribution){
                list(pdf = with(parameters,
                         function(x) dlnorm(x, meanlog = meanlog, sdlog = sdlog)),
                     parameters = parameters)
+           },
+           `exponential` = {
+               list(pdf = with(parameters, function(x) dexp(x, rate = rate)),
+                    parameters = parameters)
            }
            )
 }
