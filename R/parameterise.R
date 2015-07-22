@@ -53,6 +53,15 @@ parameterise = function(obsValue, selfInformation, distribution){
                rate = exp(-(selfInformation - 1))
                warning("Exponential distribution has mode at zero")
                list(rate = rate)
+           },
+           `weibull` = {
+               shape = uniroot(
+                   function(x){
+                       scale = obsValue/((x - 1/x)^1/x)
+                       entropyWeibull(shape = x, scale = scale) - selfInformation
+                   }, interval = c(1 + 1e-50, 1e20))$root
+               scale = scale = obsValue/((shape - 1/shape)^1/shape)
+               list(shape = shape, scale = scale)
            }
            )
 }       

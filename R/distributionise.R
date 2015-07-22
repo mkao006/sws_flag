@@ -40,6 +40,11 @@ distributionise = function(obsValue, selfInformation, distribution){
            `exponential` = {
                list(pdf = with(parameters, function(x) dexp(x, rate = rate)),
                     parameters = parameters)
+           },
+           `weibull` = {
+               list(pdf = with(parameters,
+                        function(x) dweibull(x, shape = shape, scale = scale)),
+                    parameters = parameters)
            }
            )
 }
