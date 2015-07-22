@@ -14,37 +14,42 @@
 distributionise = function(obsValue, selfInformation, distribution){
     parameters = parameterise(obsValue = obsValue,
         selfInformation = selfInformation, distribution = distribution)
-    switch(distribution,
-           `normal` = {
-               list(pdf = with(parameters,
-                        function(x) dnorm(x, mean = mean, sd = sd)),
-                    parameters = parameters)
-           },
-           `cauchy` = {
-               list(pdf = with(parameters,
-                        function(x) dcauchy(x, location = location,
-                                            scale = scale)),
-                    parameters = parameters)
-           },
-           `truncNorm` = {
-               list(pdf = with(parameters,
-                        function(x) dtruncnorm(x, a = 0, b = Inf, mean = mean,
-                                               sd = sd)),
-                    parameters = parameters)
-           },
-           `logNorm` = {
-               list(pdf = with(parameters,
-                        function(x) dlnorm(x, meanlog = meanlog, sdlog = sdlog)),
-                    parameters = parameters)
-           },
-           `exponential` = {
-               list(pdf = with(parameters, function(x) dexp(x, rate = rate)),
-                    parameters = parameters)
-           },
-           `weibull` = {
-               list(pdf = with(parameters,
-                        function(x) dweibull(x, shape = shape, scale = scale)),
-                    parameters = parameters)
-           }
-           )
+    if(selfInformation == 0){
+        list(pdf = with(parameters, function(x) ifelse(x == k0, 1, 0)),
+             parameters = parameters)
+    } else {
+        switch(distribution,
+               `normal` = {
+                   list(pdf = with(parameters,
+                            function(x) dnorm(x, mean = mean, sd = sd)),
+                        parameters = parameters)
+               },
+               `cauchy` = {
+                   list(pdf = with(parameters,
+                            function(x) dcauchy(x, location = location,
+                                                scale = scale)),
+                        parameters = parameters)
+               },
+               `truncNorm` = {
+                   list(pdf = with(parameters,
+                            function(x) dtruncnorm(x, a = 0, b = Inf, mean = mean,
+                                                   sd = sd)),
+                        parameters = parameters)
+               },
+               `logNorm` = {
+                   list(pdf = with(parameters,
+                            function(x) dlnorm(x, meanlog = meanlog, sdlog = sdlog)),
+                        parameters = parameters)
+               },
+               `exponential` = {
+                   list(pdf = with(parameters, function(x) dexp(x, rate = rate)),
+                        parameters = parameters)
+               },
+               `weibull` = {
+                   list(pdf = with(parameters,
+                            function(x) dweibull(x, shape = shape, scale = scale)),
+                        parameters = parameters)
+               }
+               )
+    }
 }
