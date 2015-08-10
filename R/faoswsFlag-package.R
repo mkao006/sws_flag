@@ -11,5 +11,6 @@
 ##' @import entropy
 ##' @import data.table
 ##' @import truncnorm
+##' @import VGAM
 ##' 
 NULL

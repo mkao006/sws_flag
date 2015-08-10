@@ -25,6 +25,11 @@ parameterise = function(obsValue, selfInformation, distribution){
                    scale = exp(selfInformation - log(4 * pi))
                    list(location = location, scale = scale)
                },
+               `laplace` = {
+                   location = obsValue
+                   scale = exp(selfInformation - 1)/2
+                   list(location = location, scale = scale)
+               },
                `truncNorm` = {
                    ## The truncated normal here is defined as having lower
                    ## bound of zero and upper bound of infinity. That is,
