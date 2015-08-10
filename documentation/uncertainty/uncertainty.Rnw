@@ -35,11 +35,19 @@
 
 \Abstract{ 
 
-  In this paper, we briefly illustrate the use of the
-  \pkg{faoswsFlag} package to parameterise the uncertainty
-  distribution based on the confidence about a value.
+  In solving the imbalance problem of the Food Balance Sheet (FBS), a
+  novel solution based on probability maximisation was adopted to
+  avoid the dispute of which element should be chosen to balance.
   
+  The implementation of the probabilistic framework requires
+  consistent and logical specification of corresponding probability
+  distribution for each of the corresponding in the Food Balance
+  Sheet.
   
+  In this paper, we present the rationale and theory behind the
+  framework. At the same time we also provide example based
+  illustration to demonstrate the use of the \pkg{faoswsFlag}
+  packages.
   
   
   
@@ -64,6 +72,7 @@
 <<setup, include=FALSE, cache=FALSE>>=
 library(knitr)
 library(xtable)
+library(RColorBrewer)
 opts_chunk$set(fig.path='figure/', fig.align='center', fig.show='hold',
                warning=FALSE, message=FALSE, error=FALSE, tidy=FALSE, 
                results='markup', eval=TRUE, echo=TRUE, cache=FALSE)
@@ -153,69 +162,57 @@ and end with discussion.
 
 \section{The Data}
 
-Before we delve into the theory and the descriptions, we will
-demonstrate some cases of the data for back ground. Further, these
-data will be later used to demonstrate the method and the package.
+Before we delve into the theory and application, we will demonstrate
+some cases of the data for back ground. Further, these data will be
+later used to demonstrate the method and the package.
 
 
 First of all, we can load up the package by prompting the following command.
 
 <<presetup>>=
+## Load the library and the two example datasets
 library(faoswsFlag)
+data(vignetteFlagTable)
+data(vignetteFBSTable)
 @ 
 
 
-An example flag table is provided along with the package.
-
-<<example-flag-table, echo=FALSE>>=
-## Create new flag table
-exampleFlagTable = 
-    data.frame(flagObservationStatus = c("", "I", "E"),
-               flagObservationWeights = c(1, 0.6, 0.2))
-
-@ 
+The example flag table \textit{vignetteFlagTable} is shown below.
 
 <<flagTable, results='asis', echo=FALSE>>=
-print(xtable(exampleFlagTable, align = "ccc"), include.rownames = FALSE)
+print(xtable(vignetteFlagTable, align = "ccc"), include.rownames = FALSE)
 @ 
 
-Empty flag denotes official data, while "I" stands for imputed value
-and "E" are manual estimates.
+The column \textbf{flagObservationStatus} represents the flags
+associated with each observed value, while the
+\textbf{flagObservationWeight} represents the corresponding confidence
+associated with the source. Empty flag denotes official data, while
+"I" stands for imputed value and "E" are manual estimates. The weights
+like probability, should be between 0 and 1.
 
 
-Shown below is an example of the format the data. Each observed value
-is associated with a flag which indicate the source of the data. Under
-the proposing framework, the flag contains information about the
-uncertainty of the value and will be used to parameterise the
-distribution. There are more elements to the Food Balance Sheet,
-however, we have selected a handful of variables for illustrative
-purpose.
+Shown below is the \textit{vignetteFBSTable} dataset which is a
+simplified version of the Food Balance Sheet for illustration in this
+paper. Each observed value is associated with a flag which indicate
+the source of the data. Under the proposing framework, the flag
+contains information about the uncertainty of the value and will be
+used to parameterise the distribution. There are more elements to the
+Food Balance Sheet, however, we have selected a handful of variables
+for illustrative purpose.
 
-<<example-fbs-table, echo=FALSE>>=
-## Create artificial example for the unbalanced Food Balance Sheet
-exampleFBS.df = 
-    data.frame(product = "wheat and products",
-               productionValue = 220,
-               productionFlag = "I",
-               importValue = 10,
-               importFlag = "",
-               exportValue = 50,
-               exportFlag = "",
-               foodValue = 150, 
-               foodFlag = "E",
-               lossValue = 100,
-               lossFlag = "I")
-@ 
 
 <<fbsTable, results='asis', echo=FALSE>>=
-printTable = exampleFBS.df[, -1]
+printTable = vignetteFBSTable[, -1]
 colnames(printTable) = gsub("Value", "", colnames(printTable))
 flagCol = grepl("Flag", colnames(printTable))
 colnames(printTable)[flagCol] = "flag"
 print(xtable(printTable, digits = 0, align = c("ccccccccccc")), include.rownames = FALSE)
 @ 
 
-
+In the example data, all trade data both import and export are
+official. On the other hand losses and production are imputed by
+statistical methods, while food was estimated based on manual
+estimates.
 
 
 \section{The Methodology}
@@ -244,7 +241,7 @@ constaints about the variable. The support, shape and properties of
 the distribution should be guided by the expertise of the officer. For
 example, production is strictly positive and thus distributions such
 as the Normal or the Cauchy should be eliminated from the
-set. Further, if extreme value are more likely then a log-normal
+set. Further, if extreme value are more likely then a Weibull
 distribution may be more preferable in comparison to the truncated
 normal distribution which has a higher kurtosis. 
 
@@ -317,7 +314,7 @@ where the uncertainty is held the same. This provides a consistent
 framework for specifying distributions in which the uncertainty for
 each element is consistent and relative amongst all elements.
 
-That is, we parameterise the distribution given the following identity.
+That is, we parameterise the distribution given the following identities.
 
 \begin{align}
   Mode(X) &= x\\ \nonumber
@@ -352,15 +349,19 @@ distribution a high level of uncertainty.
 \subsection{A Simple Example}
 
 The following illustration provides an example of the method, along
-with codes to further explain the method. In addition, we will
+with codes to demonstrate the use of the package. In addition, we will
 demonstrate how this framework can provide consistent parameterization
 of various distribution while maintaining the same level of
 uncertainty with the value. 
 
 
 <<example-parameter>>=
-obsValue = 2
-confidence = 0.2
+obsValue = 20
+confidence = 0.02
+@ 
+
+<<secret-conversion, echo=FALSE>>=
+## confidence = confidence/10
 @ 
 
 Let us assume that we have an estimated value of \Sexpr{obsValue}
@@ -440,7 +441,7 @@ distribution in which the uncertainty remains constant. The choice of
 distribution should reflect our belief in the probability allocation
 but it should not alter the uncertainty we have imposed initially.
 
-Following the same procedure, we obtain the following parameter.
+Following the same procedure, we obtain the following parameters.
 
 
 \begin{align}
@@ -505,7 +506,7 @@ standard deviation. However, as the mean increases, the truncated
 normal becomes more like the normal distribution with very similar
 standard deviation.
 
-Finally, the log-Normal distributnion is also another distribution
+Finally, the log-Normal distribution is also another distribution
 which is defined only on the real line that is suitable to describe
 the probabiblity allocation of the wheat production.
 
@@ -529,7 +530,12 @@ and,
 \end{align}
 
 
-Here is a comparison of the constructed distributions.
+Presented below is a comparison of the constructed distributions based
+on the same observed value and uncertainty. We can see all the
+distribution has mode at the observed value \Sexpr{obsValue}, except
+for the exponential distribution which has mode at 0. The choice of
+the distribution reflects our understanding of the element, but the
+level of uncertainty is held the same following the framework.
 
 <<plot, echo=FALSE, fig.height=5>>=
 library(ggplot2)
@@ -542,6 +548,10 @@ ggplot(data.frame(x = seq(cauchy$parameters$location - 10 * cauchy$parameters$sc
                       distributionise(obsValue = obsValue, selfInformation = selfInfo, 
                                       distribution = "normal")$pdf(x)
                     }, geom = "line", aes(colour = "Normal")) +
+    stat_function(fun = function(x){ 
+                      distributionise(obsValue = obsValue, selfInformation = selfInfo, 
+                                      distribution = "laplace")$pdf(x)
+                  }, geom = "line", aes(colour = "Laplace")) +        
     stat_function(fun = function(x){
                       distributionise(obsValue = obsValue, selfInformation = selfInfo, 
                                       distribution = "truncNorm")$pdf(x)
@@ -558,14 +568,18 @@ ggplot(data.frame(x = seq(cauchy$parameters$location - 10 * cauchy$parameters$sc
                       distributionise(obsValue = obsValue, selfInformation = selfInfo, 
                                       distribution = "weibull")$pdf(x)
                   }, geom = "line", aes(colour = "Weibull")) + 
-    scale_colour_manual("", values = c("blue", "purple", "orange", "gold", "steelblue", "red"), 
-                        breaks = c("Cauchy", "Normal", "Truncated-Normal", "Exponential", "Log-Normal", "Weibull")) +  
+    scale_colour_manual("", 
+                        ## values = c("blue", "purple", "orange", "gold", "steelblue", "red"), 
+                        values = brewer.pal(7, "Dark2"),
+                        breaks = c("Cauchy", "Normal", "Laplace", "Truncated-Normal", "Exponential", "Log-Normal", "Weibull")) +  
     theme(legend.position="top") +
     labs(x = "", y = "")
 
 @ 
 
-  
+The log-Normal and the truncated-Normal distribution both converges to
+the Normal distribution when the mean is relatively large with respect
+to the standard deviation.
   
 
 %% Add a plot of all the distributions offered in the packag except
@@ -573,39 +587,41 @@ ggplot(data.frame(x = seq(cauchy$parameters$location - 10 * cauchy$parameters$sc
 
 \section{Illustration}
 
-%% \begin{center}
-%% {\Huge{\textbf{Ignore this section}}}
-%% \end{center}
+To close the paper, we present a full case study of constructing the
+distributions and utilise the distributions to perform the
+probabilistic balancing.
 
-Take the example data, the first step is to construct the uncertainty
-of each FBS element based on the flags in the FBS.
+Take the example data, the first step is to compute the level of
+uncertainty of each FBS element based on the flags in the FBS.
 
 
 
 <<calculate-fbs-weights>>=
 
 ## Select all the flag columns
-flagColumns = grep("Flag", colnames(exampleFBS.df), value = TRUE)
-valueColumn = grep("Value", colnames(exampleFBS.df), value = TRUE)
+flagColumns = grep("Flag", colnames(vignetteFBSTable), value = TRUE)
+valueColumn = grep("Value", colnames(vignetteFBSTable), value = TRUE)
 
 ## First we convert the flags to weights or confidence
-(weightsFBS.df = data.frame(lapply(exampleFBS.df[, flagColumns], flag2weight)))
+(weightsFBS.df = 
+     data.frame(lapply(vignetteFBSTable[, flagColumns], 
+                       function(x) {
+                           flag2weight(flagObservationStatus = x, 
+                                       flagTable = vignetteFlagTable)
+                                    })))
 
 ## Then we compute the self-information
 (selfInfoFBS.df = data.frame(lapply(weightsFBS.df, selfInformation)))
-
-## Then we sum up the self-information for each element to obtain 
-## the uncertainty of each element.
-totalInfo.df = data.frame(lapply(selfInfoFBS.df, sum))
 
 
 
 @ 
 
 
-To create the distribution, we simply prodive the function
-`distributionise` the observered value, the total information computed
-from the flag andthe desired distribution.
+To create the distribution, we simply provide the function
+\code{distributionise} the \textbf{observered value}, the \textbf{total
+  information} computed from the flag and the \textbf{desired
+  distribution}.
 
 The function returns a list of two object. The first is the
 distribution function with the parameters computed, while the second
@@ -614,14 +630,14 @@ object is a list with the corresponding values of the parameter.
 <<create-production-distribution>>=
 
 ## Parameterise the production element with a Normal distribution
-distributionise(obsValue = exampleFBS.df$productionValue, 
-                selfInformation = totalInfo.df$productionFlag, 
+distributionise(obsValue = vignetteFBSTable$productionValue, 
+                selfInformation = selfInfoFBS.df$productionFlag, 
                 distribution = "normal")
 
 
 ## Parameterise the production element with a Truncated Normal distribution
-distributionise(obsValue = exampleFBS.df$productionValue, 
-                selfInformation = totalInfo.df$productionFlag, 
+distributionise(obsValue = vignetteFBSTable$productionValue, 
+                selfInformation = selfInfoFBS.df$productionFlag, 
                 distribution = "truncNorm")
 
 @ 
@@ -631,34 +647,34 @@ distributionise(obsValue = exampleFBS.df$productionValue,
 Below we show a full process of how to construct each uncertainty
 distribution and specify the constraints for the balancing of the FBS.
 
-<<balance>>=
+<<balance, eval=TRUE>>=
+## Here we simplify the example with one distribution, 
+## in practice each element can have their own corresponding distribution.
+chosenDistribution = "truncNorm"
 
 productionDist = 
-    distributionise(obsValue = exampleFBS.df$productionValue,
-                    selfInformation = totalInfo.df$productionFlag,
-                    distribution = "truncNorm")
-
+    distributionise(obsValue = vignetteFBSTable$productionValue,
+                    selfInformation = selfInfoFBS.df$productionFlag,
+                    distribution = chosenDistribution)
 
 importDist = 
-    distributionise(obsValue = exampleFBS.df$importValue,
-                    selfInformation = totalInfo.df$importFlag,
-                    distribution = "truncNorm")
-
+    distributionise(obsValue = vignetteFBSTable$importValue,
+                    selfInformation = selfInfoFBS.df$importFlag,
+                    distribution = chosenDistribution)
 
 exportDist = 
-    distributionise(obsValue = exampleFBS.df$exportValue,
-                    selfInformation = totalInfo.df$exportFlag,
-                    distribution = "truncNorm")
-
+    distributionise(obsValue = vignetteFBSTable$exportValue,
+                    selfInformation = selfInfoFBS.df$exportFlag,
+                    distribution = chosenDistribution)
 
 foodDist = 
-    distributionise(obsValue = exampleFBS.df$foodValue,
-                    selfInformation = totalInfo.df$foodFlag,
-                    distribution = "truncNorm")
+    distributionise(obsValue = vignetteFBSTable$foodValue,
+                    selfInformation = selfInfoFBS.df$foodFlag,
+                    distribution = chosenDistribution)
 lossDist = 
-    distributionise(obsValue = exampleFBS.df$lossValue,
-                    selfInformation = totalInfo.df$lossFlag,
-                    distribution = "truncNorm")
+    distributionise(obsValue = vignetteFBSTable$lossValue,
+                    selfInformation = selfInfoFBS.df$lossFlag,
+                    distribution = chosenDistribution)
 
 
 ## Create the likelihood function from the distributions
@@ -679,19 +695,35 @@ constraint = function(x){
 
 ## Balance the Food Balance Sheet
 library(Rsolnp)
-## Double check this solution, the resulting likelihood is infinite
+## NOTE (Michael): If degenerate distribution is present, then take 
+##                 a small step (small delta) and have large inner 
+##                 iteration to ensure convergence to the right solution.
 balancedFBS = 
-    solnp(pars = as.numeric(exampleFBS.df[, valueColumn]),
+    solnp(pars = as.numeric(vignetteFBSTable[, valueColumn]),
           fun = ll,
           eqfun = constraint,
-          eqB = c(0, exampleFBS.df$importValue, exampleFBS.df$exportValue),
-          LB = rep(0, length(valueColumn)))
+          eqB = c(0, vignetteFBSTable$importValue, vignetteFBSTable$exportValue),
+          LB = rep(0, length(valueColumn)),
+          control = list(delta = 1e-1, trace = 2, inner.iter = 3000))
 
-balancedFBS$par
+## Original values
+as.numeric(vignetteFBSTable[, valueColumn])
+
+## Balanced values
+round(balancedFBS$par)
     
 
 @ 
 
-\section{Discussion}
+From the balanced value, we can see since the element Food has the
+lowest confidence, thus its value is adjusted the most followed by
+Production and Loss with Import and Export held constant.
+
+In addition, since we have the same confidence in both the production
+and the losses element while at the same time specified symmetric
+distributions; the pair were adjusted towards the balancing by the
+same magnitude.
+
+%% \section{Discussion}
 
 \end{document}

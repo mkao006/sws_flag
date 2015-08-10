@@ -11,7 +11,8 @@ LazyData: yes
 Import:
     entropy (>= 1.2.0),
     data.table (>= 1.9.2),
-    truncnorm (>= 1.0-7)
+    truncnorm (>= 1.0-7),
+    VGAM (>= 0.9-7)
 ZipData: no
 VignetteBuilder: knitr	
 Suggests: knitr, ggplot2

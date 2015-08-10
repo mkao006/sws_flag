@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.7.2)  22 JUL 2015 10:16
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.7.2)  23 JUL 2015 10:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -532,28 +532,28 @@ Package: mathrsfs 1996/01/01 Math RSFS package v1.0 (jk)
 (./uncertainty.aux)
 \openout1 = `uncertainty.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 110.
-LaTeX Font Info:    ... okay on input line 110.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 110.
-LaTeX Font Info:    ... okay on input line 110.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 110.
-LaTeX Font Info:    ... okay on input line 110.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 110.
-LaTeX Font Info:    ... okay on input line 110.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 110.
-LaTeX Font Info:    ... okay on input line 110.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 110.
-LaTeX Font Info:    ... okay on input line 110.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 110.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 110.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 118.
+LaTeX Font Info:    ... okay on input line 118.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 118.
+LaTeX Font Info:    ... okay on input line 118.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 118.
+LaTeX Font Info:    ... okay on input line 118.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 118.
+LaTeX Font Info:    ... okay on input line 118.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 118.
+LaTeX Font Info:    ... okay on input line 118.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 118.
+LaTeX Font Info:    ... okay on input line 118.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 118.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 118.
 
  (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 110.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 110.
-LaTeX Font Info:    ... okay on input line 110.
-LaTeX Font Info:    Try loading font information for T1+pplx on input line 110.
+LaTeX Font Info:    ... okay on input line 118.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 118.
+LaTeX Font Info:    ... okay on input line 118.
+LaTeX Font Info:    Try loading font information for T1+pplx on input line 118.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pplx.fd
@@ -588,7 +588,7 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 \AtBeginShipoutBox=\box40
-Package hyperref Info: Link coloring ON on input line 110.
+Package hyperref Info: Link coloring ON on input line 118.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -598,55 +598,55 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count133
 )
-LaTeX Info: Redefining \ref on input line 110.
-LaTeX Info: Redefining \pageref on input line 110.
-LaTeX Info: Redefining \nameref on input line 110.
+LaTeX Info: Redefining \ref on input line 118.
+LaTeX Info: Redefining \pageref on input line 118.
+LaTeX Info: Redefining \nameref on input line 118.
 
 (./uncertainty.out) (./uncertainty.out)
 \@outlinefile=\write4
 \openout4 = `uncertainty.out'.
 
 LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <17.28> not available
-(Font)              Font shape `T1/pplx/b/n' tried instead on input line 110.
-LaTeX Font Info:    Try loading font information for OT1+pplx on input line 110
+(Font)              Font shape `T1/pplx/b/n' tried instead on input line 118.
+LaTeX Font Info:    Try loading font information for OT1+pplx on input line 118
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pplx.fd
 File: ot1pplx.fd 2004/09/06 font definitions for OT1/pplx.
 )
-LaTeX Font Info:    Try loading font information for OML+zplm on input line 110
+LaTeX Font Info:    Try loading font information for OML+zplm on input line 118
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omlzplm.fd
 File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
 )
-LaTeX Font Info:    Try loading font information for OMS+zplm on input line 110
+LaTeX Font Info:    Try loading font information for OMS+zplm on input line 118
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omszplm.fd
 File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
 )
-LaTeX Font Info:    Try loading font information for OMX+zplm on input line 110
+LaTeX Font Info:    Try loading font information for OMX+zplm on input line 118
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omxzplm.fd
 File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
 )
-LaTeX Font Info:    Try loading font information for OT1+zplm on input line 110
+LaTeX Font Info:    Try loading font information for OT1+zplm on input line 118
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1zplm.fd
 File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
 )
-LaTeX Font Info:    Try loading font information for U+rsfs on input line 110.
+LaTeX Font Info:    Try loading font information for U+rsfs on input line 118.
 
 (/usr/share/texlive/texmf-dist/tex/latex/jknapltx/ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
 LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <12> not available
-(Font)              Font shape `T1/pplx/b/n' tried instead on input line 110.
+(Font)              Font shape `T1/pplx/b/n' tried instead on input line 118.
 LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <10> not available
-(Font)              Font shape `T1/pplx/b/n' tried instead on input line 110.
+(Font)              Font shape `T1/pplx/b/n' tried instead on input line 118.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -683,14 +683,14 @@ LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <10> not available
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/pplx/b/n' tried instead on input line 115.
+(Font)              Font shape `T1/pplx/b/n' tried instead on input line 123.
 LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/pplx/b/n' tried instead on input line 115.
+(Font)              Font shape `T1/pplx/b/n' tried instead on input line 123.
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Package color Info: Redefining color shadecolor on input line 204.
-LaTeX Font Info:    Try loading font information for T1+aett on input line 205.
+Package color Info: Redefining color shadecolor on input line 212.
+LaTeX Font Info:    Try loading font information for T1+aett on input line 213.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/ae/t1aett.fd
@@ -698,77 +698,108 @@ File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
 )
 
 LaTeX Font Warning: Font shape `T1/aett/bx/n' undefined
-(Font)              using `T1/aett/m/n' instead on input line 206.
+(Font)              using `T1/aett/m/n' instead on input line 215.
 
 LaTeX Font Info:    Font shape `T1/pplx/m/sl' in size <10.95> not available
-(Font)              Font shape `T1/pplx/m/it' tried instead on input line 268.
+(Font)              Font shape `T1/pplx/m/it' tried instead on input line 257.
 
 Overfull \hbox (5.47499pt too wide) has occurred while \output is active
 \T1/pplx/m/n/10.95 2 []
  []
 
 [2]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 Overfull \hbox (5.47499pt too wide) has occurred while \output is active
 [] \T1/pplx/m/n/10.95 3
  []
 
 [3]
-Package color Info: Redefining color shadecolor on input line 404.
-
 Overfull \hbox (5.47499pt too wide) has occurred while \output is active
 \T1/pplx/m/n/10.95 4 []
  []
 
 [4]
-Package color Info: Redefining color shadecolor on input line 426.
-Package color Info: Redefining color shadecolor on input line 471.
+Package color Info: Redefining color shadecolor on input line 420.
+Package color Info: Redefining color shadecolor on input line 444.
 
 Overfull \hbox (5.47499pt too wide) has occurred while \output is active
 [] \T1/pplx/m/n/10.95 5
  []
 
 [5]
-Package color Info: Redefining color shadecolor on input line 520.
+Package color Info: Redefining color shadecolor on input line 489.
+Package color Info: Redefining color shadecolor on input line 538.
 
 Overfull \hbox (5.47499pt too wide) has occurred while \output is active
 \T1/pplx/m/n/10.95 6 []
  []
 
 [6]
-Package color Info: Redefining color shadecolor on input line 557.
-Package color Info: Redefining color shadecolor on input line 594.
-Package color Info: Redefining color shadecolor on input line 622.
- <figure/plot-1.pdf, id=79, 505.89pt x 361.35pt>
-File: figure/plot-1.pdf Graphic file (type pdf)
- <use figure/plot-1.pdf>
-Package pdftex.def Info: figure/plot-1.pdf used on input line 624.
-(pdftex.def)             Requested size: 455.24411pt x 325.17891pt.
+Package color Info: Redefining color shadecolor on input line 575.
 
 Overfull \hbox (5.47499pt too wide) has occurred while \output is active
 [] \T1/pplx/m/n/10.95 7
  []
 
 [7]
-Package color Info: Redefining color shadecolor on input line 650.
+Package color Info: Redefining color shadecolor on input line 612.
+Package color Info: Redefining color shadecolor on input line 645.
+ <figure/plot-1.pdf, id=81, 505.89pt x 361.35pt>
+File: figure/plot-1.pdf Graphic file (type pdf)
+ <use figure/plot-1.pdf>
+Package pdftex.def Info: figure/plot-1.pdf used on input line 647.
+(pdftex.def)             Requested size: 455.24411pt x 325.17891pt.
 
 Overfull \hbox (5.47499pt too wide) has occurred while \output is active
 \T1/pplx/m/n/10.95 8 []
  []
 
 [8 <./figure/plot-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 689.
-Package color Info: Redefining color shadecolor on input line 737.
+Package color Info: Redefining color shadecolor on input line 675.
+Package color Info: Redefining color shadecolor on input line 715.
 
 Overfull \hbox (5.47499pt too wide) has occurred while \output is active
 [] \T1/pplx/m/n/10.95 9
  []
 
 [9]
-Underfull \vbox (badness 10000) detected at line 805
+Package color Info: Redefining color shadecolor on input line 763.
+
+Overfull \hbox (9.51588pt too wide) in paragraph at lines 819--819
+[]          []\T1/aett/bx/n/10.95 eqB[] []=[] []c[][]([][]0[][], vignetteFBSTab
+le[][]$[][]importValue, vignetteFBSTable[][]$[][]exportValue),[][] 
  []
 
 
-Underfull \vbox (badness 10000) detected at line 805
+Overfull \hbox (3.7781pt too wide) in paragraph at lines 831--831
+[]\T1/aett/bx/n/10.95 ## Iter: 1 fn: 22.5156  Pars:  222.60470  10.00000  50.00
+000  85.25698  97.34772[] 
+ []
+
+
+Overfull \hbox (3.7781pt too wide) in paragraph at lines 831--831
+[]\T1/aett/bx/n/10.95 ## Iter: 2 fn: 22.5156  Pars:  222.60404  10.00000  50.00
+000  85.25621  97.34784[] 
+ []
+
+
+Overfull \hbox (3.7781pt too wide) in paragraph at lines 831--831
+[]\T1/aett/bx/n/10.95 ## Iter: 3 fn: 22.5156  Pars:  222.60398  10.00000  50.00
+000  85.25613  97.34785[] 
+ []
+
+
+Overfull \hbox (3.7781pt too wide) in paragraph at lines 831--831
+[]\T1/aett/bx/n/10.95 ## Iter: 4 fn: 22.5156  Pars:  222.60392  10.00000  50.00
+000  85.25606  97.34786[] 
+ []
+
+
+Overfull \hbox (3.7781pt too wide) in paragraph at lines 831--831
+[]\T1/aett/bx/n/10.95 ## Iter: 5 fn: 22.5156  Pars:  222.60389  10.00000  50.00
+000  85.25603  97.34786[] 
  []
 
 
@@ -777,31 +808,36 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
  []
 
 [10]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 810.
-
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 [] \T1/pplx/m/n/10.95 11
  []
 
 [11]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 810.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 860.
+
+Overfull \hbox (10.94998pt too wide) has occurred while \output is active
+\T1/pplx/m/n/10.95 12 []
+ []
+
+[12]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 860.
  (./uncertainty.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 810.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 810.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 860.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 860.
 Package rerunfilecheck Info: File `uncertainty.out' has not changed.
-(rerunfilecheck)             Checksum: 1A12C2CAD7F497002E7AC69C7CDC7C4E;678.
+(rerunfilecheck)             Checksum: DDA82EA907098784E254785735E61A21;620.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 810.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 860.
  ) 
 Here is how much of TeX's memory you used:
  10252 strings out of 493304
- 148796 string characters out of 6139872
- 274880 words of memory out of 5000000
- 13483 multiletter control sequences out of 15000+600000
- 39329 words of font info for 77 fonts, out of 8000000 for 9000
+ 148759 string characters out of 6139872
+ 276690 words of memory out of 5000000
+ 13482 multiletter control sequences out of 15000+600000
+ 40167 words of font info for 79 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  36i,10n,35p,321b,373s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
@@ -813,10 +849,10 @@ t/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts
 c/mathpazo/fplmri.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/u
 plb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on uncertainty.pdf (11 pages, 144429 bytes).
+Output written on uncertainty.pdf (12 pages, 149786 bytes).
 PDF statistics:
- 152 PDF objects out of 1000 (max. 8388607)
- 126 compressed objects within 2 object streams
- 31 named destinations out of 1000 (max. 500000)
- 70 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 150 PDF objects out of 1000 (max. 8388607)
+ 123 compressed objects within 2 object streams
+ 30 named destinations out of 1000 (max. 500000)
+ 62 words of extra memory for PDF output out of 10000 (max. 10000000)
 
