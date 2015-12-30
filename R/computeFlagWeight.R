@@ -4,10 +4,11 @@
 ##' @param officialFlag The character string representing official
 ##' figure.
 ##' @param method The method to be used to calculate the weights.
-##'
+##' 
+##' @import data.table
+##' 
 ##' @export
 ##' 
-
 
 computeFlagWeight = function(history, officialFlag = "",
     method = "entropy"){

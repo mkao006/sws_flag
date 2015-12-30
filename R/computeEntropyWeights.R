@@ -3,6 +3,8 @@
 ##' @param x The vector of new representation (q)
 ##' @param benchmark The assumed true representation (p)
 ##'
+##' @importFrom entropy KL.plugin
+##'
 ##' @export
 
 
@@ -18,7 +20,7 @@ computeEntropyWeights = function (x, benchmark){
     benchmark.freq =
         hist(benchmark.nomiss, breaks = myBreaks, plot = FALSE)$counts
     zeroIndex = which(x.freq == 0)
-    weights = 1/(1 + KL.plugin(benchmark.freq[-zeroIndex],
+    weights = 1/(1 + entropy::KL.plugin(benchmark.freq[-zeroIndex],
         x.freq[-zeroIndex]))
     if (weights == 1) 
         weights = 1 - 1e-05
